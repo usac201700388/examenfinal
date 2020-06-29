@@ -7,7 +7,7 @@ from datetime import datetime
 import socket
 from Clasetramas import HandlingInstructions
 ackactivado = False
-# mainchat = True 
+mainchat = True 
 
 
 
@@ -27,6 +27,8 @@ class ClientManagement:
         self.Groups = group
         self.instance = client_instance()
         self.Quality = 2
+        self.Buffer_size = 64 * 1024
+        self.flags = False
     
     def server_mqtt(self):
 
@@ -37,11 +39,16 @@ class ClientManagement:
             logging.info("Conectado al broker")
 
         def on_message(client, userdata, msg):
+            self.flags = False
+            global ackactivado
             logging.info("Ha llegado el mensaje al topic: " + str(msg.topic))
             if 'comandos/09' in str(msg.topic):
                 x = HandlingInstructions(trama=msg.payload)
                 if x.get_Command() == 'OK':
                     logging.info("El contenido del mensaje es: " + str(msg.payload))
+                if x.get_Command() == 'ACK':
+                    logging.info("El contenido del mensaje es: " + str(msg.payload))
+                    ackactivado = True
             else:
                 logging.info("El contenido del mensaje es: " + str(msg.payload))
 
@@ -50,6 +57,7 @@ class ClientManagement:
             logging.info(connection_text) 
 
         def on_publish(client, userdata, mid):
+            self.flags = True
             publish_text = "Publicacion satisfactoria"
             logging.debug(publish_text)
 

@@ -6,7 +6,6 @@ import time
 import threading
 import os
 
-
 ackactivado = False
 mainchat = True 
 
@@ -19,10 +18,47 @@ main_Client.connect()
 main_Client.subscription()
 print(main_Client.subscribers())
 
+
+def tramaAlive(topic_c = 'comandos', grupo = '09'):
+    global ackactivado
+    global mainchat
+    trama = HandlingInstructions(code='Alive', transmitter='201700796')
+    cont =0
+    ackactivado= False
+    while cont<205:
+        while ackactivado:
+            cont+=1
+            logging.info('enviando alives')
+            main_Client.publish_data(topic_c, grupo, trama.get_finally_code())
+            time.sleep(2)
+            if cont >3:
+                cont =0
+                ackactivado = False
+        while not ackactivado:
+            if cont<= 4:
+                logging.info('enviando alives')
+                main_Client.publish_data(topic_c, grupo, trama.get_finally_code())
+                cont+=1
+                time.sleep(2)
+            else:
+                logging.info('enviando alives')
+                main_Client.publish_data(topic_c, grupo, trama.get_finally_code())
+                cont+=1
+                time.sleep(0.1)
+                if cont>205:
+                    break
+    logging.error('No hay server')
+    mainchat = False
+
+threading.Thread(name = 'Trama ALIVE',target =tramaAlive,args = (()),daemon = True).start()
+
+
 main_Client.banner1()
 
+
+
 try:
-    while True:
+    while mainchat:
         try:
             main_Client.banner2()
             opcion = int(input('Escoja una opcion: '))
@@ -54,7 +90,10 @@ try:
             else:
                 logging.warning('Opcion incorrecta. Intente de nuevo')
         except ValueError:
-            logging.error('Error: Respuesta invalida')
+            if mainchat:
+                logging.warning('Error mal ingreso espere')
+            else:
+                logging.warning('Servidor fuera de linea')
         time.sleep(DEFAULT_DELAY)
 except KeyboardInterrupt:
     pass
