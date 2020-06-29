@@ -16,11 +16,12 @@ main_Client.server_mqtt()
 main_Client.connect()
 main_Client.subscription()
 print(main_Client.subscribers())
+print (main_Client.get_userClient())
 
 
 def tramaAlive(topic_c = 'comandos', grupo = '09'):
     global mainchat
-    trama = HandlingInstructions(code='ALIVE', transmitter='201700796')
+    trama = HandlingInstructions(code='ALIVE', transmitter=main_Client.get_userClient())
     cont =0
     main_Client.ackactivado = False
     while cont<205:
@@ -78,7 +79,7 @@ try:
                     logging.info('Grabe su mensaje')
                     os.system('arecord -d '+ str(duracion)+ ' -f U8 -r 8000 audior.wav')
                     logging.info('Mensaje grabado')
-                    negociacion_audio = HandlingInstructions(code='FTR', transmitter='201700796', addressee=str(x), file_size=str(os.stat('audior.wav').st_size))
+                    negociacion_audio = HandlingInstructions(code='FTR', transmitter=main_Client.get_userClient(), addressee=str(x), file_size=str(os.stat('audior.wav').st_size))
                     main_Client.publish_data('comandos/09', str(x), negociacion_audio.get_finally_code())
                     time.sleep(1)          
                 else:

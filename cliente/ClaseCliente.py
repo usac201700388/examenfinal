@@ -58,7 +58,7 @@ class ClientManagement:
                 elif x.get_Command() == 'FRR':
                     logging.debug('Hay una solicitud de transferencia de archivos')
                     logging.debug('Preparando para recibir...')
-                    
+
 
 
             else:
@@ -105,8 +105,13 @@ class ClientManagement:
                 topic.append(tuple_commands)
             rooms.close()
         return topic
-
-    
+    def get_userClient(self):
+        with open(self.participants, 'r') as user:
+            for i in user:
+                split_v = i.split(',')
+                x  = split_v[0]
+        user.close()
+        return x    
     def subscription(self):
         client = self.instance
         list_topics = self.subscribers()
