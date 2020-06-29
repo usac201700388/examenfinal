@@ -28,7 +28,7 @@ def tramaAlive(topic_c = 'comandos', grupo = '09'):
     while cont<205:
         while ackactivado:
             cont+=1
-            logging.info('enviando alives')
+            #logging.info('enviando alives')
             main_Client.publish_data(topic_c, grupo, trama.get_finally_code())
             time.sleep(2)
             if cont >3:
@@ -36,12 +36,12 @@ def tramaAlive(topic_c = 'comandos', grupo = '09'):
                 ackactivado = False
         while not ackactivado:
             if cont<= 4:
-                logging.info('enviando alives')
+                #logging.info('enviando alives')
                 main_Client.publish_data(topic_c, grupo, trama.get_finally_code())
                 cont+=1
                 time.sleep(2)
             else:
-                logging.info('enviando alives')
+                #logging.info('enviando alives')
                 main_Client.publish_data(topic_c, grupo, trama.get_finally_code())
                 cont+=1
                 time.sleep(0.1)

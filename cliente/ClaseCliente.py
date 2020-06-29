@@ -46,9 +46,12 @@ class ClientManagement:
                 x = HandlingInstructions(trama=msg.payload)
                 if x.get_Command() == 'OK':
                     logging.info("El contenido del mensaje es: " + str(msg.payload))
+                    logging.debug('El archivo empezara a enviarse...')
                 if x.get_Command() == 'ACK':
                     logging.info("El contenido del mensaje es: " + str(msg.payload))
                     ackactivado = True
+                if x.get_Command() == 'NO':
+                    logging.warning('El destinatario no esta conectado...')
             else:
                 logging.info("El contenido del mensaje es: " + str(msg.payload))
 
