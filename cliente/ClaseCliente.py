@@ -42,14 +42,14 @@ class ClientManagement:
         def on_message(client, userdata, msg):
             # self.flags = False
             #global ackactivado
-            logging.info("Ha llegado el mensaje al topic: " + str(msg.topic))
+            # logging.info("Ha llegado el mensaje al topic: " + str(msg.topic))
             if 'comandos/09' in str(msg.topic):
                 x = HandlingInstructions(trama=msg.payload)
                 if x.get_Command() == 'OK':
                     logging.info("El contenido del mensaje es: " + str(msg.payload))
                     logging.debug('El archivo empezara a enviarse...')
                 if x.get_Command() == 'ACK':
-                    logging.info("El contenido del mensaje es: " + str(msg.payload))
+                    # logging.info("El contenido del mensaje es: " + str(msg.payload))
                     self.ackactivado = True
                 if x.get_Command() == 'NO':
                     logging.warning('El destinatario no esta conectado...')

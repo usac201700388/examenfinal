@@ -6,7 +6,6 @@ import time
 import threading
 import os
 
-ackactivado = False
 mainchat = True 
 
 
@@ -20,7 +19,6 @@ print(main_Client.subscribers())
 
 
 def tramaAlive(topic_c = 'comandos', grupo = '09'):
-    global ackactivado
     global mainchat
     trama = HandlingInstructions(code='ALIVE', transmitter='201700796')
     cont =0
