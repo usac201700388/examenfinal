@@ -8,7 +8,7 @@ from datetime import datetime
 import socket
 from Clasetramas import HandlingInstructions
 
-#ackactivado = False
+#ackactivado = Falsehttps://github.com/usac201700388/examenfinal.git
 mainchat = True 
 
 #JGPA Se inicia una nueva instancia de cliente mqtt
@@ -140,7 +140,7 @@ class ClientManagement:
                 #JGPA Se separa por comas y se obtiene el carne
                 split_v = i.split(',')
                 x  = split_v[0]
-        user.close()
+        user.close()https://github.com/usac201700388/examenfinal.git
         return x
 
     #JGPA Metodo para suscribirse 
