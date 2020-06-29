@@ -47,7 +47,8 @@ class ClientManagement:
                 x = HandlingInstructions(trama=msg.payload)
                 if x.get_Command() == 'OK':
                     logging.info("El contenido del mensaje es: " + str(msg.payload))
-                    logging.debug('El archivo empezara a enviarse...')
+                    logging.info('El archivo empezara a enviarse...')
+                    self.configurar_hilo()
                 if x.get_Command() == 'ACK':
                     # logging.info("El contenido del mensaje es: " + str(msg.payload))
                     self.ackactivado = True
@@ -148,6 +149,10 @@ class ClientManagement:
         g.close()
         sock.close()
         connection.close()
+    
+    def configurar_hilo(self):
+        time.sleep(3)
+        threading.Thread(name = 'Servidor TCP',target = self.envio_tcp(),args = (()),daemon = False).start()
 
     def banner1(self):
         print('\n')

@@ -76,9 +76,9 @@ try:
                     destino = int(input('Enviar a usuario o sala? '))
                     x, y = main_Client.destinatario(destino)
                     logging.info('Grabe su mensaje')
-                    os.system('arecord -d '+ str(duracion)+ ' -f U8 -r 8000 audioparaenviar.wav')
+                    os.system('arecord -d '+ str(duracion)+ ' -f U8 -r 8000 audior.wav')
                     logging.info('Mensaje grabado')
-                    negociacion_audio = HandlingInstructions(code='FTR', transmitter='201700796', addressee=str(x), file_size=str(os.stat('audioparaenviar.wav').st_size))
+                    negociacion_audio = HandlingInstructions(code='FTR', transmitter='201700796', addressee=str(x), file_size=str(os.stat('audior.wav').st_size))
                     main_Client.publish_data('comandos/09', str(x), negociacion_audio.get_finally_code())
                     time.sleep(1)          
                 else:
