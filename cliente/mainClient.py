@@ -11,7 +11,7 @@ mainchat = True
 
 logging.basicConfig(level=logging.INFO, format='\n[%(levelname)s] (%(threadName)-10s) %(message)s')
 
-main_Client = ClientManagement(MQTT_HOST, MQTT_USER, MQTT_PASS, MQTT_PORT, user=FILE_USERS, rooms=FILE_ROOMS, group=GROUP_NUMBER)
+main_Client = ClientManagement(MQTT_HOST, MQTT_USER, MQTT_PASS, MQTT_PORT, TCP_PORT, user=FILE_USERS, rooms=FILE_ROOMS, group=GROUP_NUMBER)
 main_Client.server_mqtt()
 main_Client.connect()
 main_Client.subscription()

@@ -3,6 +3,7 @@ MQTT_HOST: str = "157.245.82.242"
 MQTT_PORT: int = 1883
 MQTT_USER: str = "proyectos"
 MQTT_PASS: str = "proyectos980"
+TCP_PORT: int = 9809
 # LOG_FILENAME: str = 'mqtt.log'
 # Definiciones de Grupo
 GROUP_NUMBER: str = '09'
