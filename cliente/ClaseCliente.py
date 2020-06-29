@@ -48,7 +48,7 @@ class ClientManagement:
                 if x.get_Command() == 'OK':
                     # logging.info("El contenido del mensaje es: " + str(msg.payload))
                     logging.info('El archivo empezara a enviarse...')
-                    self.configurar_hilo()
+                    self.configurar_hilo(proceso=self.envio_tcp())
                     logging.info('Arhivo enviado')
                 elif x.get_Command() == 'ACK':
                     # logging.info("El contenido del mensaje es: " + str(msg.payload))
@@ -58,9 +58,8 @@ class ClientManagement:
                 elif x.get_Command() == 'FRR':
                     logging.debug('Hay una solicitud de transferencia de archivos')
                     logging.debug('Preparando para recibir...')
-
-
-
+                    self.configurar_hilo(self.recibido_tcp())
+                    self.configurar_hilo(self.play_audio('audior.wav'))
             else:
                 logging.info("El contenido del mensaje es: " + str(msg.payload))
 
@@ -162,9 +161,9 @@ class ClientManagement:
         sock.close()
         connection.close()
     
-    def configurar_hilo(self):
+    def configurar_hilo(self, proceso):
         time.sleep(3)
-        threading.Thread(name = 'Servidor TCP',target = self.envio_tcp(),args = (()),daemon = False).start()
+        threading.Thread(name = 'Servidor TCP',target =proceso,args = (()),daemon = False).start()
 
     def banner1(self):
         print('\n')
@@ -201,3 +200,8 @@ class ClientManagement:
                 logging.warning('Numero incorrecto. Intente de nuevo')
             pri = 'salas'
             return sala, pri
+
+    def play_audio(self, fileName):
+        logging.info('Audio guardado') # JDCR Mensaje en consola.
+        cont = 'aplay '+ str(fileName) # JDCR Concatenacion de todos las partes que requiere el comando.
+        os.system(cont) # JDCR Ejecicion del comando de reproduccion
