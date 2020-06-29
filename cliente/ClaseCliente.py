@@ -46,14 +46,21 @@ class ClientManagement:
             if 'comandos/09' in str(msg.topic):
                 x = HandlingInstructions(trama=msg.payload)
                 if x.get_Command() == 'OK':
-                    logging.info("El contenido del mensaje es: " + str(msg.payload))
+                    # logging.info("El contenido del mensaje es: " + str(msg.payload))
                     logging.info('El archivo empezara a enviarse...')
                     self.configurar_hilo()
-                if x.get_Command() == 'ACK':
+                    logging.info('Arhivo enviado')
+                elif x.get_Command() == 'ACK':
                     # logging.info("El contenido del mensaje es: " + str(msg.payload))
                     self.ackactivado = True
-                if x.get_Command() == 'NO':
+                elif x.get_Command() == 'NO':
                     logging.warning('El destinatario no esta conectado...')
+                elif x.get_Command() == 'FRR':
+                    logging.debug('Hay una solicitud de transferencia de archivos')
+                    logging.debug('Preparando para recibir...')
+                    
+
+
             else:
                 logging.info("El contenido del mensaje es: " + str(msg.payload))
 
@@ -62,7 +69,6 @@ class ClientManagement:
             logging.info(connection_text) 
 
         def on_publish(client, userdata, mid):
-            # self.flags = True
             publish_text = "Publicacion satisfactoria"
             logging.debug(publish_text)
 
@@ -133,6 +139,7 @@ class ClientManagement:
         print("\n\nArchivo enviado a: ", clientAddress)
         sock.close()
         connection.close()
+
     def recibido_tcp(self):
         sock, connection, clientAddress = self.server_tcp()
         info = connection.recv(self.Buffer_size).decode()
