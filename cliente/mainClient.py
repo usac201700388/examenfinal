@@ -22,19 +22,19 @@ print(main_Client.subscribers())
 def tramaAlive(topic_c = 'comandos', grupo = '09'):
     global ackactivado
     global mainchat
-    trama = HandlingInstructions(code='Alive', transmitter='201700796')
+    trama = HandlingInstructions(code='ALIVE', transmitter='201700796')
     cont =0
-    ackactivado= False
+    main_Client.ackactivado = False
     while cont<205:
-        while ackactivado:
+        while main_Client.ackactivado:
             cont+=1
             #logging.info('enviando alives')
             main_Client.publish_data(topic_c, grupo, trama.get_finally_code())
             time.sleep(2)
             if cont >3:
                 cont =0
-                ackactivado = False
-        while not ackactivado:
+                main_Client.ackactivado = False
+        while not main_Client.ackactivado:
             if cont<= 4:
                 #logging.info('enviando alives')
                 main_Client.publish_data(topic_c, grupo, trama.get_finally_code())

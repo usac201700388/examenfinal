@@ -6,7 +6,7 @@ import threading
 from datetime import datetime
 import socket
 from Clasetramas import HandlingInstructions
-ackactivado = False
+#ackactivado = False
 mainchat = True 
 
 
@@ -28,7 +28,8 @@ class ClientManagement:
         self.instance = client_instance()
         self.Quality = 2
         self.Buffer_size = 64 * 1024
-        self.flags = False
+        # self.flags = False
+        self.ackactivado = False
     
     def server_mqtt(self):
 
@@ -39,8 +40,8 @@ class ClientManagement:
             logging.info("Conectado al broker")
 
         def on_message(client, userdata, msg):
-            self.flags = False
-            global ackactivado
+            # self.flags = False
+            #global ackactivado
             logging.info("Ha llegado el mensaje al topic: " + str(msg.topic))
             if 'comandos/09' in str(msg.topic):
                 x = HandlingInstructions(trama=msg.payload)
@@ -49,7 +50,7 @@ class ClientManagement:
                     logging.debug('El archivo empezara a enviarse...')
                 if x.get_Command() == 'ACK':
                     logging.info("El contenido del mensaje es: " + str(msg.payload))
-                    ackactivado = True
+                    self.ackactivado = True
                 if x.get_Command() == 'NO':
                     logging.warning('El destinatario no esta conectado...')
             else:
@@ -60,7 +61,7 @@ class ClientManagement:
             logging.info(connection_text) 
 
         def on_publish(client, userdata, mid):
-            self.flags = True
+            # self.flags = True
             publish_text = "Publicacion satisfactoria"
             logging.debug(publish_text)
 
