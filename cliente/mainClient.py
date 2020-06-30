@@ -93,9 +93,9 @@ try:
                 #JGPA Se ingresa el mensaje que queremos enviar
                 mensaje_a_enviar = str(input('Escriba el mensaje:\n\n'))
                 #EMVB Se llama la funcion para encriptar el texto
-                encriptado = seguridad.encriptacion(mensaje_a_enviar)
+                mensaje_a_enviar = seguridad.encriptacion(mensaje_a_enviar)
                 #JGPA Se envia el mensaje
-                main_Client.publish_data(y, str(x), encriptado)
+                main_Client.publish_data(y, str(x), mensaje_a_enviar)
                 logging.info("El mensaje ha sido enviado")
 
             #JGPA Si la opcion es 2

@@ -1,6 +1,7 @@
 #EMVB librerias necesarias para la ejecucion del programa
 from Crypto.Cipher import AES
 from Crypto import Random
+from Crypto.Random import get_random_bytes
 import base64
 import hashlib
 
@@ -22,6 +23,7 @@ class Encriptacion(object):
         mensaje = self.pad(mensaje)
         #EMVB genera un vector aleatorio de 16 bytes
         vector = Random.new().read(AES.block_size)
+        #vector = Random.get_random_bytes(AES.block_size)
         #EMVB genera el cifrador de mensajes
         cifrado = AES.new(self.clave, AES.MODE_CBC, vector)
         #EMVB regresa un vector de bytes del mensaje encriptado con base 64
@@ -63,6 +65,12 @@ hacer la modificacion de:
     t = time.clock()   ->    t = time.perf_counter()
 
 Esto es devido que en Python 3.8 se descontinuo este modulo, el cual es la razon por la cual hay que hacer este cambio en la libreria.
+
+De no ser posible el arreglo al programa, se tienen que hacer unos simples cambios de a los programas.
+
+1) En ClaseCliente.py se debe desabilitar la linea 81 y hacer el cambio de variable para que ingrese directo el mensaje.
+
+2) En mainClient.py se debe desabilitar la linea 96. 
 
 #EMVB
 
