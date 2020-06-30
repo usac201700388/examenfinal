@@ -54,13 +54,15 @@ En caso de que surja el error:
 
 "AttributeError: module 'time' has no attribute 'clock'"
 
-Es necesario cambiar a un python inferior, o cambiar en la biblioteca:
+Es necesario cambiar a un python inferior, o cambiar en la libreria:
 
  File "/usr/local/lib/python3.8/dist-packages/Crypto/Random/_UserFriendlyRNG.py", line 77, in collect
    
 hacer la modificacion de:  
 
     t = time.clock()   ->    t = time.perf_counter()
+
+Esto es devido que en Python 3.8 se descontinuo este modulo, el cual es la razon por la cual hay que hacer este cambio en la libreria.
 
 #EMVB
 

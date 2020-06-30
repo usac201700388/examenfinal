@@ -6,6 +6,10 @@ import logging
 import time
 import threading
 import os
+from Encriptacion_txt import Encriptacion
+
+#EMVB Se define la palabra clave de encriptacion
+seguridad = Encriptacion('grupo9')
 
 #JGPA Booleano para activar el menu
 mainchat = True 
@@ -88,8 +92,10 @@ try:
                 x, y = main_Client.destinatario(destino)
                 #JGPA Se ingresa el mensaje que queremos enviar
                 mensaje_a_enviar = str(input('Escriba el mensaje:\n\n'))
+                #EMVB Se llama la funcion para encriptar el texto
+                encriptado = seguridad.encriptacion(mensaje_a_enviar)
                 #JGPA Se envia el mensaje
-                main_Client.publish_data(y, str(x), mensaje_a_enviar)
+                main_Client.publish_data(y, str(x), encriptado)
                 logging.info("El mensaje ha sido enviado")
 
             #JGPA Si la opcion es 2

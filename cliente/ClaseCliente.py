@@ -7,6 +7,10 @@ import threading
 from datetime import datetime
 import socket
 from Clasetramas import HandlingInstructions
+from Encriptacion_txt import Encriptacion
+
+#EMVB Se define la palabra clave de encriptacion
+seguridad = Encriptacion('grupo9')
 
 #ackactivado = Falsehttps://github.com/usac201700388/examenfinal.git
 mainchat = True 
@@ -73,8 +77,10 @@ class ClientManagement:
                     # self.configurar_hilo(self.recibido_tcp())
                     # self.configurar_hilo(self.play_audio('audior.wav'))
             else:
+                #EMVB Se llama la funcion para desencriptar el texto recibido
+                desencriptado = seguridad.desencriptacion(msg.payload)
                 #JGPA Si el mensaje no llega a comandos entonces se muestra en pantalla
-                logging.info("El contenido del mensaje es: " + str(msg.payload))
+                logging.info("El contenido del mensaje es: " + str(desencriptado))
 
         #JGPA Funcion cuando se conecta al broker
         def on_connect_pub(client, userdata, flags, rc):
@@ -140,7 +146,7 @@ class ClientManagement:
                 #JGPA Se separa por comas y se obtiene el carne
                 split_v = i.split(',')
                 x  = split_v[0]
-        user.close()https://github.com/usac201700388/examenfinal.git
+        user.close()
         return x
 
     #JGPA Metodo para suscribirse 
